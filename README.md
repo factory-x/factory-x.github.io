@@ -133,7 +133,3 @@ Where:
 - "EM_TEST.xlsx" = the path to the workbook
 - "EM" = the name of the worksheet
  
-# Model-T API
-
-test
-
