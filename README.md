@@ -9,7 +9,7 @@ Install node: https://nodejs.org/en/download/ (Choose the LTS version)
 Step 2:
 
 Install yarn (wrapper around npm for faster package installs):
-```shell
+```
 npm install -g yarn
 ```
 Step 3:
@@ -17,7 +17,7 @@ Step 3:
 Install factory-x-cli (Command Line Interface)
 
 Use npm because the yarn install is not working yet for this package
-```shell
+```
 npm install -g factory-x-cli
 ```
 
