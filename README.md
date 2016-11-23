@@ -114,9 +114,9 @@ Make changes to the model and templates as required, and execute 'fx render' whe
 
 The templating engine is based on Nunjucks: https://mozilla.github.io/nunjucks/
 
-# Model-A API
+## Model-A API
 
-## Import of excel-based EM-tyes
+### Import of excel-based EM-tyes
 The model can import EM-types defined in excel-spreadsheets.
 Inside the model define the import like this:
 ```json
