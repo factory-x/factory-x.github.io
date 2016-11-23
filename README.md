@@ -119,7 +119,7 @@ The templating engine is based on Nunjucks: https://mozilla.github.io/nunjucks/
 ### Import of excel-based EM-tyes
 The model can import EM-types defined in excel-spreadsheets.
 Inside the model define the import like this:
-```json
+```js
 {
     "Equipment_Modules":{
         "Types":{
