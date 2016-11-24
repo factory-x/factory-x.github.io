@@ -85,6 +85,51 @@ Make changes to the model and templates as required, and execute 'fx render' whe
 The templating engine is based on Nunjucks: https://mozilla.github.io/nunjucks/
 
 # Model-A API
+## Schema definitions
+### sequence
+location in the schema: #/definitions/sequence
+type: object
+description: sequence object
+property name | property value
+---|---
+Steps | [steps](#steps)
+Example:
+```
+"Sequence_Running":{
+	"Steps":{
+		"10": {
+			"Comment": "step 10",
+			"Actions":[
+			],
+			"Transitions":{
+				"20": [
+				],
+				"30":{
+				}
+			}
+		},
+		"20":{
+		}
+	}
+}
+```
+
+### steps
+location in the schema: #/definitions/sequence/properties/Steps
+type: object
+description: key = stepnumber, value = stepobject
+key: stepnumber
+value: stepobject
+
+### stepobject
+location in the schema: #/definitions/sequence/properties/Steps/additionalProperties
+type: object
+description: sequence object
+property name | property value
+---|---
+Comment | #/definitions/comment
+Actions | #/definitions/actions
+Transitions | transitions
 
 ## Import of excel-based EM-tyes
 The model can import EM-types defined in excel-spreadsheets.
