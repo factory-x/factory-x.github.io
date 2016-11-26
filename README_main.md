@@ -86,6 +86,7 @@ The templating engine is based on Nunjucks: https://mozilla.github.io/nunjucks/
 
 # Model-A API
 ## Schema definitions
+<<<<<<< HEAD:README_main.md
 
 {% for doc in docs -%}
 ### {{ doc.title }}
@@ -112,6 +113,8 @@ property name | property value
 	{%- endif %}
 {% endfor %}
 
+=======
+>>>>>>> origin/master:README.md
 ### sequence
 location in the schema: #/definitions/sequence
 type: object
