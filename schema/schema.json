@@ -1,0 +1,436 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "schema",
+	"description": "json-model used to describe the structure of a control program, with the goal of full auto-generation of documents and code",
+	"type": "object",
+	"definitions": {
+		"comment": {
+			"title": "Comment",
+			"type": "string"
+		},
+		"controller":{
+			"title": "Controller",
+			"description": "refers to the controller where the code for this instance needs to be put",
+			"type": "string"
+		},
+		"io_object_list": {
+			"title": "io_object_list",
+			"description": "key = inputname, value = io object",
+			"additonalProperties": {
+				"title": "io-object",
+				"type": "object",
+				"properties": {
+					"Type": {
+						"title": "Data_Type",
+						"description": "Data Type",
+						"type": "string"
+					},
+					"Comment": {
+						"$ref": "#/definitions/comment"
+					},
+					"Suffix": {
+						"title": "Suffix",
+						"description": "string added to the name for unique identification of the io",
+						"type": "string"
+					},
+					"Unit": {
+						"title": "Measurement_Unit",
+						"type": "string"
+					},
+					"Enumeration": {
+						"title": "Enumeration_Reference",
+						"description": "string referring to the enumerationname of an enumeration list",
+						"type": "string"
+					},
+					"truewords": {
+						"title": "truewords",
+						"description": "list of words that can be interpreted as true for this io",
+						"type": "array",
+						"items": {
+							"title": "trueword",
+							"type": "string"
+						}
+					},
+					"falsewords": {
+						"title": "falsewords",
+						"description": "list of words that can be interpreted as false for this io",
+						"type": "array",
+						"items": {
+							"title": "falseword",
+							"type": "string"
+						}
+					}
+				}
+			}
+		},
+		"actions": {
+			"title": "list of actions",
+			"type": "array",
+			"items": {
+				"title": "action",
+				"description": "This string has to be sent through the action/state interpreter",
+				"type": "string"
+			}
+		},
+		"multi_state": {
+			"title": "multi_state",
+			"oneOf": [{
+				"title": "multi_state_list",
+				"description": "key = boolean logic, value = array of multi_state objects",
+				"type": "object",
+				"additonalProperties": {
+					"title": "multi_state_array",
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/multi_state"
+					}
+				}
+			}, {
+				"title": "single_state",
+				"description": "single state without boolean logic. This string has to be sent through the action/state interpreter",
+				"type": "string"
+			}]
+		},
+		"linked_modules": {
+			"title": "linked_module_list",
+			"description": "Key = linked module name, value = linked module name",
+			"additonalProperties": {
+				"title": "linked_module_name",
+				"type": "string"
+			}
+		},
+		"sequence": {
+			"title": "sequence",
+			"description": "sequence object",
+			"type": "object",
+			"properties": {
+				"Steps": {
+					"title": "steps",
+					"description": "key-value list of stepobjects",
+					"key": "stepnumber",
+					"value": "stepobject",
+					"type": "object",
+					"additonalProperties": {
+						"title": "stepobject",
+						"type": "object",
+						"properties": {
+							"Comment": {
+								"$ref": "#/definitions/comment"
+							},
+							"Actions": {
+								"$ref": "#/definitions/actions"
+							},
+							"Transitions": {
+								"title": "transitions",
+								"description": "key = target stepnumber, value = multi_state object",
+								"type": "object",
+								"additonalProperties": {
+									"$ref": "#/definitions/multi_state"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"properties": {
+		"Controllers": {
+			"title": "Controllers",
+			"description": "A list of all the controllers in the project. These values are used at instances of CM's, EM's, Phases, etc... to define in which controller they should be generated. It is also used to automatically generate links for objects between different controllers.",
+			"type": "array",
+			"items": {
+				"title": "controllername",
+				"description": "A string indicating the name or id of the controller",
+				"type": "string"
+			}
+		},
+		"Enumerations": {
+			"title": "enumeration_objects",
+			"description": "key = enumerationname, value = enumerationobject",
+			"type": "object",
+			"additonalProperties": {
+				"type": "object",
+				"title": "enumeration_object",
+				"description": "key = enumeration number, value = enumeration string (alphanumeric, no spaces)",
+				"additonalProperties": {
+					"title": "enumeration",
+					"type": "string"
+				}
+			}
+		},
+		"Units": {
+			"title": "Units",
+			"description": "key = Unit name, value = Unit object",
+			"additonalProperties": {
+				"title": "Unit_Object",
+				"type": "object",
+				"properties": {
+					"Controller": {
+						"$ref": "#/definitions/controller"
+					},
+					"ID": {
+						"title": "Unit_ID",
+						"type": "number"
+					}
+				}
+			}
+		},
+		"Control_Modules": {
+			"title": "Control_Modules",
+			"description": "holds the CM types and instances",
+			"properties": {
+				"Types": {
+					"title": "Control_Module_Types",
+					"description": "key = CM-type name, value = CM-type object",
+					"type": "object",
+					"additonalProperties": {
+						"title": "Control_Module_Type",
+						"properties": {
+							"Comment": {
+								"$ref": "#/definitions/comment"
+							},
+							"Inputs": {
+								"$ref": "#/definitions/io_object_list"
+							},
+							"Outputs": {
+								"$ref": "#/definitions/io_object_list"
+							}
+						}
+					}
+				},
+				"Instances": {
+					"title": "Control_Module_Instances",
+					"description": "key = CM-instance name, value = CM-instane object",
+					"type": "object",
+					"additonalProperties": {
+						"title": "Control_Module_Instance",
+						"properties": {
+							"Comment": {
+								"$ref": "#/definitions/comment"
+							},
+							"Type": {
+								"title": "Control_Module_Type_Reference",
+								"type": "string",
+								"description": "refers to the CM-type"
+							},
+							"Controller": {
+								"$ref": "#/definitions/controller"
+							},
+							"Linked_Modules": {
+								"$ref": "#/definitions/linked_modules"
+							}
+						}
+					}
+				}
+			}
+		},
+		"Equipment_Modules": {
+			"title": "Equipment_Modules",
+			"description": "holds the EM types and instances",
+			"properties": {
+				"Types": {
+					"title": "Equipment_Module_Types",
+					"description": "key = EM-type name, value = EM-type object",
+					"type": "object",
+					"additonalProperties": {
+						"title": "Equipment_Module_Type",
+						"properties": {
+							"Comment": {
+								"$ref": "#/definitions/comment"
+							},
+							"Inputs": {
+								"$ref": "#/definitions/io_object_list"
+							},
+							"Outputs": {
+								"$ref": "#/definitions/io_object_list"
+							},
+							"States": {
+								"title": "key-value list of the EM states",
+								"description": "key = state number, value = state object",
+								"type": "object",
+								"additonalProperties": {
+									"title": "state_object",
+									"Command": {
+										"type": "string",
+										"description": "alphanumeric string used for example in the FDS"
+									},
+									"Actions": {
+										"$ref": "#/definitions/actions"
+									},
+									"State": {
+										"$ref": "#/definitions/multi_state"
+									}
+								}
+							}
+						}
+					}
+				},
+				"Instances": {
+					"title": "Equipment_Module_Instances",
+					"description": "key = EM-instance name, value = EM-instane object",
+					"type": "object",
+					"additonalProperties": {
+						"title": "Equipment_Module_Instance",
+						"properties": {
+							"Comment": {
+								"$ref": "#/definitions/comment"
+							},
+							"Type": {
+								"title": "Equipment_Module_Type_Reference",
+								"type": "string",
+								"description": "refers to the EM-type"
+							},
+							"Controller": {
+								"$ref": "#/definitions/controller"
+							},
+							"Linked_Modules": {
+								"$ref": "#/definitions/linked_modules"
+							}
+						}
+					}
+				}
+			}
+		},
+		"Phases": {
+			"title": "Phases",
+			"description": "holds the Phase types and instances",
+			"properties": {
+				"Types": {
+					"title": "Phase_Types",
+					"description": "key = Phase-type name, value = Phase-type object",
+					"type": "object",
+					"additonalProperties": {
+						"title": "Phase_Type",
+						"properties": {
+							"Comment": {
+								"$ref": "#/definitions/comment"
+							},
+							"Linked_Modules": {
+								"$ref": "#/definitions/linked_modules"
+							},
+							"Inputs": {
+								"$ref": "#/definitions/io_object_list"
+							},
+							"Outputs": {
+								"$ref": "#/definitions/io_object_list"
+							},
+							"Parameters_Batch": {
+								"$ref": "#/definitions/io_object_list"
+							},
+							"Parameters_HMI": {
+								"$ref": "#/definitions/io_object_list"
+							},
+							"Parameters_PLC": {
+								"$ref": "#/definitions/io_object_list"
+							},
+							"Internals": {
+								"$ref": "#/definitions/io_object_list"
+							},
+							"Start_And_Hold_Conditions": {
+								"title": "Start_And_Hold_Conditions",
+								"type": "array",
+								"items": {
+									"title": "Start_And_Hold_Condition",
+									"type": "object",
+									"properties": {
+										"Comment": {
+											"$ref": "#/definitions/comment"
+										},
+										"Steps": {
+											"title": "Steps",
+											"description": "unlimited array of step-interval arrays",
+											"type": "array",
+											"items": {
+												"title": "step_interval",
+												"description": "interval between and including start and end step",
+												"type": "array",
+												"items": {
+													"title": "Step",
+													"type": "number"
+												}
+											}
+										},
+										"Safe_State": {
+											"$ref": "#/definitions/multi_state"
+										},
+										"Hold_Condition": {
+											"title": "hold_condition",
+											"description": "1 = hold condition",
+											"type": "bool"
+										},
+										"Start_Condition": {
+											"title": "start_condition",
+											"description": "1 = start condition",
+											"type": "bool"
+										}
+									}
+								}
+							},
+							"Sequence_Idle": {
+								"$ref": "#/definitions/sequence"
+							},
+							"Sequence_Running": {
+								"$ref": "#/definitions/sequence"
+							},
+							"Sequence_Complete": {
+								"$ref": "#/definitions/sequence"
+							},
+							"Sequence_Pausing": {
+								"$ref": "#/definitions/sequence"
+							},
+							"Sequence_Paused": {
+								"$ref": "#/definitions/sequence"
+							},
+							"Sequence_Holding": {
+								"$ref": "#/definitions/sequence"
+							},
+							"Sequence_Held": {
+								"$ref": "#/definitions/sequence"
+							},
+							"Sequence_Restarting": {
+								"$ref": "#/definitions/sequence"
+							},
+							"Sequence_Stopping": {
+								"$ref": "#/definitions/sequence"
+							},
+							"Sequence_Stopped": {
+								"$ref": "#/definitions/sequence"
+							},
+							"Sequence_Aborting": {
+								"$ref": "#/definitions/sequence"
+							},
+							"Sequence_Aborted": {
+								"$ref": "#/definitions/sequence"
+							}
+						}
+					}
+				},
+				"Instances": {
+					"title": "Phase_Instanes",
+					"description": "key = Phase-instance name, value = Phase-instane object",
+					"type": "object",
+					"additonalProperties": {
+						"title": "Phase_Instance",
+						"properties": {
+							"Comment": {
+								"$ref": "#/definitions/comment"
+							},
+							"Type": {
+								"title": "Phase_Type_Reference",
+								"type": "string",
+								"description": "refers to the Phase-type"
+							},
+							"Controller": {
+								"$ref": "#/definitions/controller"
+							},
+							"Linked_Modules": {
+								"$ref": "#/definitions/linked_modules"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
