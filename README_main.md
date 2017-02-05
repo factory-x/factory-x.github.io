@@ -4,14 +4,8 @@
 **Step 1** 
 Install node: https://nodejs.org/en/download/ (Choose the LTS version)
 
-**Step 2**
-Install yarn (wrapper around npm for faster package installs):
-```
-npm install -g yarn
-```
 **Step 3**
 Install factory-x-cli (Command Line Interface)
-Use npm because the yarn install is not working yet for this package
 ```
 npm install -g factory-x-cli
 ```
@@ -22,11 +16,6 @@ Install Github Desktop: https://desktop.github.com/
 Also apply for a free account if you don't have one yet and log in
 
 
-**Step 5**
-Configure word to avoid pop-up when opening documents with html-code:
-```
-File > Options > Advanced > General > disable 'Confirm file format conversion on open'
-```
 ## Starting a new project
 
 **Step 1**
@@ -45,12 +34,12 @@ Open a shell in the main project folder.
 Initialize the project and fill in all the questions:
 
 ```shell
-yarn init
+npm init
 ```
 **Step 4**
 Install the factory-x project tools:
 ```shell
-yarn add factory-x
+npm install factory-x --save
 ```
 **Step 5**
 Create project.json in the main folder.
@@ -65,7 +54,8 @@ Create following folder structure:
 ./templates/plc
 ./output/model
 ./output/fds
-./output/plc
+./output/model
+./output/hmi
 ```
 **Step 7**
 Copy the model and templates (fds + plc) of a previous project
@@ -76,7 +66,7 @@ Generate the fds and plc-code based on the template:
 fx render
 ```
 **Step 9**
-Use github desktop to make the first commit to github.
+Use github desktop to make the first commit + sync to github.
 (Fill in a summary and description!)
 From here on make regular commits, from hourly to at least daily
 
