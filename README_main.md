@@ -18,15 +18,9 @@ Also apply for a free account if you don't have one yet and log in
 
 ## Starting a new project
 
+
 **Step 1**
-Create a new __**private**__ project on github:
-* select add readme during creation
-* choose the .gitignore of node
-
-If you have a free account then ask someone with a paid account to create the project and give you access.
-
-**Step 2**
-Use Github Desktop to clone the project to your own pc
+Create a new folder where you want to put the project
 
 **Step 3**
 Open a shell in the main project folder.
@@ -50,11 +44,9 @@ Create project.json in the main folder.
 Create following folder structure:
 ```
 ./model 
-./templates/fds
 ./templates/plc
 ./output/model
-./output/fds
-./output/model
+./output/plc
 ./output/hmi
 ```
 **Step 7**
@@ -65,10 +57,6 @@ Generate the fds and plc-code based on the template:
 ```shell
 fx render
 ```
-**Step 9**
-Use github desktop to make the first commit + sync to github.
-(Fill in a summary and description!)
-From here on make regular commits, from hourly to at least daily
 
 **Step 10**
 Make changes to the model and templates as required, and execute 'fx render' when you want to review the output.
